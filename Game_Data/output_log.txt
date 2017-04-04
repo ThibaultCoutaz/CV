@@ -1,0 +1,37 @@
+Initialize engine version: 5.5.0f3 (38b4efef76f0)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: AMD Radeon (TM) R9 380 Series (ID=0x6939)
+    Vendor:   ATI
+    VRAM:     3072 MB
+    Driver:   21.19.137.514
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\pc\Documents\SourceTree\CV\Game_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\pc\Documents\SourceTree\CV\Game_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\pc\Documents\SourceTree\CV\Game_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\pc\Documents\SourceTree\CV\Game_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\pc\Documents\SourceTree\CV\Game_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\pc\Documents\SourceTree\CV\Game_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\pc\Documents\SourceTree\CV\Game_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\pc\Documents\SourceTree\CV\Game_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\pc\Documents\SourceTree\CV\Game_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\pc\Documents\SourceTree\CV\Game_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\pc\Documents\SourceTree\CV\Game_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
+Loading C:\Users\pc\Documents\SourceTree\CV\Game_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
+- Completed reload, in  0.038 seconds
+Platform assembly: C:\Users\pc\Documents\SourceTree\CV\Game_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\pc\Documents\SourceTree\CV\Game_Data\Managed\System.dll (this message is harmless)
+desktop: 1680x1050 60Hz; virtual: 3046x1050 at -1366,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 1.959896 ms
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.311861 ms
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 1980.
+Total: 0.672805 ms (FindLiveObjects: 0.100807 ms CreateObjectMapping: 0.041531 ms MarkObjects: 0.519517 ms  DeleteObjects: 0.010194 ms)
+
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: 129c -> priority: 1 
