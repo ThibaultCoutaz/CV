@@ -6,7 +6,7 @@ public class HUDEndRunner : HUDElement {
 
     public void CloseGame()
     {
-        Application.Quit();
+        HUDManager.Instance.StartScene("Dialogue");
     }
 
 }

@@ -9,11 +9,16 @@ public class HUDTimer : HUDElement {
 
     private bool start = false;
     private int currentCount = 0;
-    private CharacterBehaviour player;
 
-    public void StartCount(CharacterBehaviour _player)
+    private TimerManager scriptManager;
+
+    public void InitTimer(TimerManager script)
     {
-        player = _player;
+        scriptManager = script;
+    }
+
+    public void StartCount()
+    {
         start = true;
         currentCount = timerNumber.Length;
         ProgressCount();
@@ -38,8 +43,8 @@ public class HUDTimer : HUDElement {
         }
         else
         {
-            player.StartGame();
-            HUDManager.Instance.DisplayTimer(false,player);
+            scriptManager.canStartGame = true;
+            HUDManager.Instance.DisplayTimer(false);
         }
     }
 }

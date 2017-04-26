@@ -12,14 +12,11 @@ public class HUDTuto : HUDElement {
         None
     }
 
-    private CharacterBehaviour player;
     public Sprite tutoRunner;
     public Sprite tutoBucket;
 
-    public void Init(tutoStyle tutoStylish, CharacterBehaviour _player)
+    public void Init(tutoStyle tutoStylish)
     {
-        player = _player;
-
         if (tutoStylish == tutoStyle.Runner)
             GetComponent<Image>().sprite = tutoRunner;
 
@@ -29,7 +26,7 @@ public class HUDTuto : HUDElement {
 
     public void StartPlaying()
     {
-        HUDManager.Instance.DisplayTuto(false, player);
-        HUDManager.Instance.DisplayTimer(true, player);
+        HUDManager.Instance.DisplayTuto(false);
+        HUDManager.Instance.DisplayTimer(true);
     }
 }

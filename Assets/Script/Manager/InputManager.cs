@@ -21,13 +21,13 @@ public class InputManager : MonoBehaviour
     }
 
     public bool IsPressingHaut { get; private set; }
-    public bool PauseCamera { get; private set; }
+    public bool Pause { get; private set; }
     public bool IsPressingSpace { get; private set; }
 
     void Update()
     {
         IsPressingHaut = Input.GetButton("Haut");
-        PauseCamera = Input.GetButtonDown("Cancel");
+        Pause = Input.GetButtonDown("Cancel");
         IsPressingSpace = Input.GetButton("Jump");
     }
 

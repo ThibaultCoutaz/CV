@@ -26,15 +26,24 @@ namespace UnityStandardAssets._2D
             }
         }
 
+        [HideInInspector]
+        public bool justPause = false;
 
         private void FixedUpdate()
         {
-            // Read the inputs.
-            bool crouch = Input.GetKey(KeyCode.LeftControl);
-            float h = CrossPlatformInputManager.GetAxis("Horizontal");
-            // Pass all parameters to the character control script.
-            m_Character.Move(h, crouch, m_Jump);
-            m_Jump = false;
+            if (!GetComponent<CharacterBehaviour>().pause)
+            {
+                // Read the inputs.
+                bool crouch = Input.GetKey(KeyCode.LeftControl);
+                float h = CrossPlatformInputManager.GetAxis("Horizontal");
+                // Pass all parameters to the character control script.
+                m_Character.Move(h, crouch, m_Jump);
+                m_Jump = false;
+            }else if (justPause)//To not have the character still moving just when press pause
+            {
+                justPause = false;
+                GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            }
         }
     }
 }

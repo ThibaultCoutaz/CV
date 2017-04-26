@@ -49,7 +49,11 @@ public class HUDManager : Singleton<HUDManager>
             key == Game.UI_Types.StartWave ||
             key == Game.UI_Types.MoneyTowerDefence ||
             key == Game.UI_Types.LevelUpTower ||
-            key == Game.UI_Types.Dialogue)
+            key == Game.UI_Types.Dialogue ||
+            key == Game.UI_Types.Shooter ||
+            key == Game.UI_Types.TurnFight ||
+            key == Game.UI_Types.MenuPause ||
+            key == Game.UI_Types.EndScreenShooter)
             element.displayGroup(false, .0f, false, false);
     }
 
@@ -76,6 +80,49 @@ public class HUDManager : Singleton<HUDManager>
 
     #endregion
 
+    public void DisplayTuto(bool display, HUDTuto.tutoStyle stylish = HUDTuto.tutoStyle.Bucket)
+    {
+        HUDElement tuto;
+        if (elements.TryGetValue(Game.UI_Types.Tutorial, out tuto))
+        {
+            if (display)
+            {
+                tuto.displayGroup(true);
+                ((HUDTuto)tuto).Init(stylish);
+            }
+            else
+            {
+                tuto.displayGroup(false);
+            }
+        }
+    }
+
+    public void InitTimer(TimerManager script)
+    {
+        HUDElement timer;
+        if (elements.TryGetValue(Game.UI_Types.Timer, out timer))
+        {
+            ((HUDTimer)timer).InitTimer(script);
+        }
+    }
+
+    public void DisplayTimer(bool display)
+    {
+        HUDElement timer;
+        if (elements.TryGetValue(Game.UI_Types.Timer, out timer))
+        {
+            if (display)
+            {
+                timer.displayGroup(true);
+                ((HUDTimer)timer).StartCount();
+            }
+            else
+            {
+                timer.displayGroup(false);
+            }
+        }
+    }
+
     public void DisplayScoreBucketGame(bool display)
     {
         HUDElement score;
@@ -85,13 +132,39 @@ public class HUDManager : Singleton<HUDManager>
         }
     }
 
-    public void InitLifeRunner(int nbLife)
+    public void InitMenuPause(string nextScene="",string previousScene="")
+    {
+        HUDElement passLevel;
+        if (elements.TryGetValue(Game.UI_Types.MenuPause, out passLevel))
+        {
+            ((HUDMenuPause)passLevel).Init(nextScene, previousScene);
+        }
+    }
+
+    public void DisplayMenuPause(bool display)
+    {
+        HUDElement passLevel;
+        if (elements.TryGetValue(Game.UI_Types.MenuPause, out passLevel))
+        {
+            passLevel.displayGroup(display);
+        }
+    }
+
+    #region Runner
+    public void DisplayLifeRunner(bool display,int nbLife=0)
     {
         HUDElement life;
         if (elements.TryGetValue(Game.UI_Types.LifeRunner, out life))
         {
-            life.displayGroup(true);
-            ((HUDLifeRunner)life).InitLife(nbLife);
+            if (display)
+            {
+                life.displayGroup(display);
+                ((HUDLifeRunner)life).InitLife(nbLife);
+            }
+            else
+            {
+                life.displayGroup(false);
+            }
         }
     }
 
@@ -104,40 +177,6 @@ public class HUDManager : Singleton<HUDManager>
         }
     }
 
-    public void DisplayTuto(bool display, CharacterBehaviour player, HUDTuto.tutoStyle stylish = HUDTuto.tutoStyle.Bucket)
-    {
-        HUDElement tuto;
-        if (elements.TryGetValue(Game.UI_Types.Tutorial, out tuto))
-        {
-            if (display)
-            {
-                tuto.displayGroup(true);
-                ((HUDTuto)tuto).Init(stylish, player);
-            }
-            else
-            {
-                tuto.displayGroup(false);
-            }
-        }
-    }
-
-    public void DisplayTimer(bool display,CharacterBehaviour player)
-    {
-        HUDElement timer;
-        if (elements.TryGetValue(Game.UI_Types.Timer, out timer))
-        { 
-            if (display)
-            {
-                timer.displayGroup(true);
-                ((HUDTimer)timer).StartCount(player);
-            }
-            else
-            {
-                timer.displayGroup(false);
-            }
-        }
-    }
-
     public void DisplayEndRunner(bool display)
     {
         HUDElement end;
@@ -146,8 +185,9 @@ public class HUDManager : Singleton<HUDManager>
             end.displayGroup(display);
         }
     }
+    #endregion
 
-
+    #region TowerDefence
     public void InitTowerShop(HUDTowerShop.elementStruct[] elementsList)
     {
         HUDElement shopT;
@@ -230,7 +270,9 @@ public class HUDManager : Singleton<HUDManager>
                 ((HUDLevelUpTower)levelUp).Init(script);
         }
     }
+    #endregion
 
+    #region Dialogue
     public void InitDialogue(ManageDialogue script)
     {
         HUDElement dialg;
@@ -245,7 +287,7 @@ public class HUDManager : Singleton<HUDManager>
         HUDElement dialg;
         if (elements.TryGetValue(Game.UI_Types.Dialogue, out dialg))
         {
-            dialg.displayGroup(true);
+            dialg.displayGroup(display);
         }
     }
 
@@ -257,6 +299,179 @@ public class HUDManager : Singleton<HUDManager>
             ((HUDDialogues)dialg).SetText(text);
         }
     }
+    #endregion
+
+    #region Shooter
+    public void DisplayShooter(bool display)
+    {
+        HUDElement shooter;
+        if (elements.TryGetValue(Game.UI_Types.Shooter, out shooter))
+        {
+            shooter.displayGroup(display);
+        }
+    }
+
+    public void InitShooter(int timeTotal)
+    {
+        HUDElement shooter;
+        if (elements.TryGetValue(Game.UI_Types.Shooter, out shooter))
+        {
+            ((HUDShooter)shooter).Init(timeTotal);
+        }
+    }
+
+    public void setTimerShooter(double timer)
+    {
+        HUDElement shooter;
+        if (elements.TryGetValue(Game.UI_Types.Shooter, out shooter))
+        {
+            ((HUDShooter)shooter).SetTimer(timer);
+        }
+    }
+
+    public void SetScoreShooter(int score)
+    {
+        HUDElement shooter;
+        if (elements.TryGetValue(Game.UI_Types.Shooter, out shooter))
+        {
+            ((HUDShooter)shooter).SetScore(score);
+        }
+    }
+
+    public void SetManche(bool manche2)
+    {
+        HUDElement shooter;
+        if (elements.TryGetValue(Game.UI_Types.Shooter, out shooter))
+        {
+            ((HUDShooter)shooter).SetManche(manche2);
+        }
+    }
+
+    public void DisplayViewFinder(bool display)
+    {
+        HUDElement shooter;
+        if (elements.TryGetValue(Game.UI_Types.Shooter, out shooter))
+        {
+            ((HUDShooter)shooter).DisplayViewFinder(display);
+        }
+    }
+
+    public void DisplayEndScreenShooter(bool display, string text="")
+    {
+        HUDElement endShooter;
+        if (elements.TryGetValue(Game.UI_Types.EndScreenShooter, out endShooter))
+        {
+            if(display)
+                ((HUDFinalScreenShooter)endShooter).Init(text);
+
+            endShooter.displayGroup(display);
+        }
+    }
+    #endregion
+
+    #region TurnFight
+
+    public void DisplayTurnFight(bool display)
+    {
+        HUDElement turnFight;
+        if (elements.TryGetValue(Game.UI_Types.TurnFight, out turnFight))
+        {
+            turnFight.displayGroup(display);
+        }
+    }
+
+    public void InitTurnFight(ManageTurnFight manager, float maxlife,float maxTimer,float maxlifeEnnemy, float maxTimerEnnemy)
+    {
+        HUDElement turnFight;
+        if (elements.TryGetValue(Game.UI_Types.TurnFight, out turnFight))
+        {
+            ((HUDTurnFight)turnFight).Init(manager,maxlife, maxTimer, maxlifeEnnemy, maxTimerEnnemy);
+        }
+    }
+
+    public void SetYourLifeTurnFight(float life)
+    {
+        HUDElement turnFight;
+        if (elements.TryGetValue(Game.UI_Types.TurnFight, out turnFight))
+        {
+            ((HUDTurnFight)turnFight).SetYourLife(life);
+        }
+    }
+
+    public void SetYourTimerTurnFight(float timer)
+    {
+        HUDElement turnFight;
+        if (elements.TryGetValue(Game.UI_Types.TurnFight, out turnFight))
+        {
+            ((HUDTurnFight)turnFight).SetYourTimer(timer);
+        }
+    }
+
+    public void SetEnnemyLifeTurnFight(float life)
+    {
+        HUDElement turnFight;
+        if (elements.TryGetValue(Game.UI_Types.TurnFight, out turnFight))
+        {
+            ((HUDTurnFight)turnFight).SetEnnemyLife(life);
+        }
+    }
+
+    public void SetBackMaxTimerAttackEnnemy(float value)
+    {
+        HUDElement turnFight;
+        if (elements.TryGetValue(Game.UI_Types.TurnFight, out turnFight))
+        {
+            ((HUDTurnFight)turnFight).setBackEnnemyTimerAttack(value);
+        }
+    }
+
+    public void SetEnnemyTimerTurnFight(float timer)
+    {
+        HUDElement turnFight;
+        if (elements.TryGetValue(Game.UI_Types.TurnFight, out turnFight))
+        {
+            ((HUDTurnFight)turnFight).SetEnnemyTimer(timer);
+        }
+    }
+
+    public void ActivateButton(bool activate)
+    {
+        HUDElement turnFight;
+        if (elements.TryGetValue(Game.UI_Types.TurnFight, out turnFight))
+        {
+            ((HUDTurnFight)turnFight).ActivateAction(activate);
+        }
+    }
+
+    public void RestartTurnFight()
+    {
+        HUDElement turnFight;
+        if (elements.TryGetValue(Game.UI_Types.TurnFight, out turnFight))
+        {
+            ((HUDTurnFight)turnFight).RestartValue();
+        }
+    }
+    #endregion
+
+    #region menu
+    public void displayMenu(bool display)
+    {
+        HUDElement menu;
+        if (elements.TryGetValue(Game.UI_Types.Menu, out menu))
+        {
+                menu.displayGroup(display);
+        }
+    }
+
+    public void StartScene(string nameScene)
+    {
+        HUDElement menu;
+        if (elements.TryGetValue(Game.UI_Types.Menu, out menu))
+        {
+            ((HUDMenu)menu).LaunchGame(nameScene);
+        }
+    }
+    #endregion
 }
 
 

@@ -10,8 +10,7 @@ public class InitGame : MonoBehaviour {
     {
         Invoke("LaunchGame", 1.0f);
     }
-
-
+    
     private void LaunchGame()
     {
         SceneManager.LoadScene(nameScene);

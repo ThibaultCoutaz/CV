@@ -19,7 +19,12 @@ namespace Game
         StartWave,
         MoneyTowerDefence,
         LevelUpTower,
-        Dialogue
+        Dialogue,
+        Shooter,
+        TurnFight,
+        Menu,
+        MenuPause,
+        EndScreenShooter
     }
 
     public enum Tower_Types

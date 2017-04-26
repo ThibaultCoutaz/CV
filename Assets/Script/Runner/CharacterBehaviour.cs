@@ -14,37 +14,58 @@ public class CharacterBehaviour : MonoBehaviour {
     private bool justClimb = false;
 
     private Vector3 spawn;
+    [HideInInspector]
+    public bool pause = false;
+    private bool displayPause = false;
 
 	// Use this for initialization
 	void Start () {
+
+        HUDManager.Instance.InitMenuPause("Dialogue","Runner");
+
         spawn = transform.position;
         currentNbTry = nbTry;
         cam.GetComponent<BehaviourCamera>().gameStart = false;
         GetComponent<Platformer2DUserControl>().enabled = false;
         GetComponent<PlatformerCharacter2D>().enabled = false;
-        HUDManager.Instance.InitLifeRunner(nbTry);
-        HUDManager.Instance.DisplayTuto(true,this, HUDTuto.tutoStyle.Runner);
+        HUDManager.Instance.DisplayLifeRunner(true,nbTry);
+        HUDManager.Instance.DisplayTuto(true, HUDTuto.tutoStyle.Runner);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (canClimb)
+
+        //Pause
+        if (InputManager.Instance.Pause)
         {
-            if (InputManager.Instance.IsPressingHaut)
-            {
-                if (!justClimb)
-                    justClimb = true;
-                GetComponent<Rigidbody2D>().gravityScale = 0;
-                transform.position += new Vector3(0, speedClimb, 0);
-            }
-            else
-            {
-                GetComponent<Rigidbody2D>().gravityScale = 1.5f;
-            }
+            pause = !pause;
+            HUDManager.Instance.DisplayMenuPause(pause);
+            cam.GetComponent<BehaviourCamera>().pause = pause;
+            GetComponent<Platformer2DUserControl>().justPause = true;
         }
-        else if (justClimb)
+
+        if (!pause)
         {
-            GetComponent<Rigidbody2D>().gravityScale = 3;
+            if (TimerManager.Instance.canStartGame)
+                StartGame();
+            if (canClimb)
+            {
+                if (InputManager.Instance.IsPressingHaut)
+                {
+                    if (!justClimb)
+                        justClimb = true;
+                    GetComponent<Rigidbody2D>().gravityScale = 0;
+                    transform.position += new Vector3(0, speedClimb, 0);
+                }
+                else
+                {
+                    GetComponent<Rigidbody2D>().gravityScale = 1.5f;
+                }
+            }
+            else if (justClimb)
+            {
+                GetComponent<Rigidbody2D>().gravityScale = 3;
+            }
         }
 	}
 
@@ -91,6 +112,7 @@ public class CharacterBehaviour : MonoBehaviour {
         cam.GetComponent<BehaviourCamera>().gameStart = true;
         GetComponent<Platformer2DUserControl>().enabled = true;
         GetComponent<PlatformerCharacter2D>().enabled = true;
+        TimerManager.Instance.canStartGame = false;
     }
 
     private void Restart()
@@ -100,7 +122,7 @@ public class CharacterBehaviour : MonoBehaviour {
         cam.GetComponent<BehaviourCamera>().gameStart = false;
         GetComponent<Platformer2DUserControl>().enabled = false;
         GetComponent<PlatformerCharacter2D>().enabled = false;
-        HUDManager.Instance.DisplayTimer(true, this);
+        HUDManager.Instance.DisplayTimer(true);
     }
 
     public void SetSpawn(Vector3 newSpawn)
