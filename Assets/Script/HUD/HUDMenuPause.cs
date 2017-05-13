@@ -21,7 +21,8 @@ public class HUDMenuPause : HUDElement {
             HUDManager.Instance.DisplayLifeRunner(false);
             HUDManager.Instance.DisplayTimer(false);
             HUDManager.Instance.DisplayTuto(false);
-        }else if(previousScene == "Shooter")
+        }
+        else if(previousScene == "Shooter")
         {
             HUDManager.Instance.DisplayShooter(false);
             HUDManager.Instance.DisplayTimer(false);

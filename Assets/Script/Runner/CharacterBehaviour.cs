@@ -42,6 +42,7 @@ public class CharacterBehaviour : MonoBehaviour {
             HUDManager.Instance.DisplayMenuPause(pause);
             cam.GetComponent<BehaviourCamera>().pause = pause;
             GetComponent<Platformer2DUserControl>().justPause = true;
+            HUDManager.Instance.PauseTimer(pause);
         }
 
         if (!pause)
@@ -117,8 +118,9 @@ public class CharacterBehaviour : MonoBehaviour {
 
     private void Restart()
     {
-        transform.position = spawn;
         cam.transform.position = new Vector3(spawn.x, cam.transform.position.y, cam.transform.position.z);
+        transform.position = spawn;
+        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         cam.GetComponent<BehaviourCamera>().gameStart = false;
         GetComponent<Platformer2DUserControl>().enabled = false;
         GetComponent<PlatformerCharacter2D>().enabled = false;

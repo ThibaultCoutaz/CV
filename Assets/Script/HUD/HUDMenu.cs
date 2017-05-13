@@ -23,4 +23,16 @@ public class HUDMenu : HUDElement {
         DontDestroyOnLoad(HUDManager.Instance.gameObject);
         DontDestroyOnLoad(InputManager.Instance.gameObject);
     }
+
+    public void OpenCredit()
+    {
+        HUDManager.Instance.displayMenu(false);
+        HUDManager.Instance.DisplayCredit(true);
+    }
+
+    public void OpenCV()
+    {
+        HUDManager.Instance.displayMenu(false);
+        HUDManager.Instance.DisplayCV(true);
+    }
 }

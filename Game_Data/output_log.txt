@@ -2,37 +2,26 @@ Initialize engine version: 5.5.0f3 (38b4efef76f0)
 GfxDevice: creating device client; threaded=1
 Direct3D:
     Version:  Direct3D 11.0 [level 11.0]
-    Renderer: NVIDIA GeForce GTX 950M (ID=0x139a)
-    Vendor:   NVIDIA
+    Renderer: AMD Radeon (TM) R9 380 Series (ID=0x6939)
+    Vendor:   ATI
     VRAM:     3072 MB
-    Driver:   10.18.13.6881
+    Driver:   21.19.137.514
 Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\Pubco\Documents\SourceTree\CVDesposit\Game_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\Pubco\Documents\SourceTree\CVDesposit\Game_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\Pubco\Documents\SourceTree\CVDesposit\Game_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
-Loading C:\Users\Pubco\Documents\SourceTree\CVDesposit\Game_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
-Platform assembly: C:\Users\Pubco\Documents\SourceTree\CVDesposit\Game_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\Pubco\Documents\SourceTree\CVDesposit\Game_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\Pubco\Documents\SourceTree\CVDesposit\Game_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading C:\Users\Pubco\Documents\SourceTree\CVDesposit\Game_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-Platform assembly: C:\Users\Pubco\Documents\SourceTree\CVDesposit\Game_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
-Loading C:\Users\Pubco\Documents\SourceTree\CVDesposit\Game_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-Platform assembly: C:\Users\Pubco\Documents\SourceTree\CVDesposit\Game_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
-Loading C:\Users\Pubco\Documents\SourceTree\CVDesposit\Game_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
-- Completed reload, in  0.047 seconds
-Platform assembly: C:\Users\Pubco\Documents\SourceTree\CVDesposit\Game_Data\Managed\System.Core.dll (this message is harmless)
-Platform assembly: C:\Users\Pubco\Documents\SourceTree\CVDesposit\Game_Data\Managed\System.dll (this message is harmless)
-desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+Platform assembly: C:\Users\pc\Documents\SourceTree\CVdeposit\Game_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\pc\Documents\SourceTree\CVdeposit\Game_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\pc\Documents\SourceTree\CVdeposit\Game_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\pc\Documents\SourceTree\CVdeposit\Game_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\pc\Documents\SourceTree\CVdeposit\Game_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\pc\Documents\SourceTree\CVdeposit\Game_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\pc\Documents\SourceTree\CVdeposit\Game_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\pc\Documents\SourceTree\CVdeposit\Game_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\pc\Documents\SourceTree\CVdeposit\Game_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\pc\Documents\SourceTree\CVdeposit\Game_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\pc\Documents\SourceTree\CVdeposit\Game_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
+Loading C:\Users\pc\Documents\SourceTree\CVdeposit\Game_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
+- Completed reload, in  0.354 seconds
+Platform assembly: C:\Users\pc\Documents\SourceTree\CVdeposit\Game_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\pc\Documents\SourceTree\CVdeposit\Game_Data\Managed\System.dll (this message is harmless)
+desktop: 1680x1050 60Hz; virtual: 3046x1050 at -1366,0
 <RI> Initializing input.
 <RI> Input initialized.
-<RI> Initialized touch support.
-UnloadTime: 2.685921 ms
-Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.443311 ms
-
-Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 1881.
-Total: 0.748457 ms (FindLiveObjects: 0.085267 ms CreateObjectMapping: 0.055265 ms MarkObjects: 0.599239 ms  DeleteObjects: 0.008289 ms)
-
-Setting up 2 worker threads for Enlighten.
-  Thread -> id: 994 -> priority: 1 
-  Thread -> id: 2ef0 -> priority: 1 

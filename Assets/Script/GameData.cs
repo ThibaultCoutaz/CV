@@ -24,7 +24,9 @@ namespace Game
         TurnFight,
         Menu,
         MenuPause,
-        EndScreenShooter
+        EndScreenShooter,
+        Credit,
+        CV
     }
 
     public enum Tower_Types

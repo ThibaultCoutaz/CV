@@ -9,8 +9,7 @@ public class HUDShooter : HUDElement {
     public Text score;
     public Image manche;
 
-    public Sprite manche1Sprite;
-    public Sprite manche2Sprite;
+    public Sprite mancheSprite;
 
     public GameObject viewFinder;
 
@@ -20,7 +19,7 @@ public class HUDShooter : HUDElement {
             Timer.text = "0" + timeTotal + ":00";
         else
             Timer.text = timeTotal + ":00";
-        manche.sprite = manche1Sprite;
+        manche.sprite = mancheSprite;
     }
 
     public void SetTimer(double time)
@@ -39,9 +38,13 @@ public class HUDShooter : HUDElement {
     public void SetManche(bool isManche2)
     {
         if (!isManche2)
-            manche.sprite = manche1Sprite;
+        {
+            manche.color = Color.gray;
+        }
         else
-            manche.sprite = manche2Sprite;
+        {
+            manche.color = Color.white;
+        }
     }
 
     public void DisplayViewFinder(bool display)

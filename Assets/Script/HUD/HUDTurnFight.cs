@@ -32,6 +32,13 @@ public class HUDTurnFight : HUDElement {
     private float cachedYTimerEnnemy, minXValueTimerEnnemy, maxXValueTimerEnnemy, maxTimerEnnemy;
     #endregion
 
+    #region BossPic
+    public Image picBoss;
+    public Sprite[] bossSprites;
+    #endregion
+
+    public GameObject dmgScreen;
+
     // Use this for initialization
     public void Init(ManageTurnFight _manager, float _maxlife, float _maxTimer, float _maxlifeEnnemy, float _maxTimerEnnemy) {
 
@@ -91,6 +98,21 @@ public class HUDTurnFight : HUDElement {
         barTransformLife.localPosition = new Vector3(currentXValue, cachedYLife);
     }
 
+    public void HitOrHeal(bool hit)
+    {
+        if (hit)
+        {
+            dmgScreen.SetActive(true);
+            Invoke("DisableDmg", 0.5f);
+        }
+
+    }
+
+    private void DisableDmg()
+    {
+        dmgScreen.SetActive(false);
+    }
+
     public void SetYourTimer(float timer)
     {
         float currentXValue = MapValues(timer, 0f, maxTimer, minXValueTimer, maxXValueTimer);
@@ -141,5 +163,10 @@ public class HUDTurnFight : HUDElement {
         SetEnnemyLife(maxLifeEnnemy);
         SetYourTimer(maxTimer);
         SetEnnemyTimer(maxTimerEnnemy);
+    }
+
+    public void SetPicBoss(int index)
+    {
+        picBoss.sprite = bossSprites[index];
     }
 }

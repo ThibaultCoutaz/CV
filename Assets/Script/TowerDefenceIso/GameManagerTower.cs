@@ -5,6 +5,12 @@ using UnityEngine;
 public class GameManagerTower : MonoBehaviour {
 
     public float currentMoney = 300;
+    public int totalLife;
+
+    public Transform parentlife;
+    public GameObject life;
+    private GameObject[] currentLife;
+    private int currentlifeInt;
 
     public HUDTowerShop.elementStruct[] listTower;
 
@@ -37,6 +43,16 @@ public class GameManagerTower : MonoBehaviour {
         HUDManager.Instance.DisplaySatrtWave(true);
         HUDManager.Instance.DisplayMoneyTowerDefence(true);
         HUDManager.Instance.EditMoneyTowerDefence(currentMoney);
+
+        currentLife = new GameObject[totalLife];
+        currentLife[0] = life;
+        currentlifeInt = totalLife;
+
+        for (int i = 1; i < totalLife; i++)
+        {
+            currentLife[i] = Instantiate(life, parentlife);
+        }
+
 	}
 
     // Update is called once per frame
@@ -98,5 +114,18 @@ public class GameManagerTower : MonoBehaviour {
 
         if(nbActif ==0)
             HUDManager.Instance.EnableButtonWaveStart();
+    }
+
+    public void RemoveLife()
+    {
+        if(currentlifeInt > 0)
+        {
+            currentLife[currentlifeInt-1].SetActive(false);
+            currentlifeInt--;
+        }
+        else
+        {
+            //EndGame
+        }
     }
 }

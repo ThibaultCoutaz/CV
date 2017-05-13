@@ -9,6 +9,7 @@ public class HUDDialogues : HUDElement {
     public Toggle wayDisplay;
     public Button next;
     public GameObject textInfo;
+    public GameObject ButtonYes, ButtonNo,ButtonNext;      
 
     public float timeWriteNormal = 0.05f;
     public float timeWriteSpeed = 0.0025f;
@@ -81,6 +82,24 @@ public class HUDDialogues : HUDElement {
             textInfo.SetActive(true);
         else
             textInfo.SetActive(false);
+    }
+
+    public void DisplayButton(bool display)
+    {
+        ButtonNext.SetActive(!display);
+        ButtonYes.SetActive(display);
+        ButtonNo.SetActive(display);
+    }
+
+    public void YesButton()
+    {
+        DisplayButton(false);
+        scriptDialogue.InitText();
+    }
+
+    public void NoButton()
+    {
+        scriptDialogue.NextReply();
     }
 
 }

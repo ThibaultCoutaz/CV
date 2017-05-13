@@ -6,6 +6,7 @@ public class ManageSpawnTarget : MonoBehaviour {
 
     [Tooltip("In minutes")]
     public int timerGame;
+    public float startingTimeSpawn;
     private float currentTimeLeft;
 
     public int minScoreToWin;
@@ -22,7 +23,7 @@ public class ManageSpawnTarget : MonoBehaviour {
 
     public int scoreGoodword;
     public int scoreBadWord;
-    public int scoreMissGoodWord;
+    public int scoreMissBadWord;
     public int palierManche2;
 
     private int score;
@@ -34,6 +35,7 @@ public class ManageSpawnTarget : MonoBehaviour {
     private bool manche2 = false;
 
     private bool end = false;
+    private bool endDisplay = false;
     private bool pause = false;
 
 	// Use this for initialization
@@ -42,6 +44,7 @@ public class ManageSpawnTarget : MonoBehaviour {
         HUDManager.Instance.InitMenuPause("Dialogue", "Shooter");
 
         end = false;
+        endDisplay = false;
         currentTimeLeft = timerGame * 60;
         score = 0;
 
@@ -69,6 +72,8 @@ public class ManageSpawnTarget : MonoBehaviour {
 
         HUDManager.Instance.InitShooter(timerGame);
         HUDManager.Instance.DisplayShooter(true);
+        HUDManager.Instance.SetScoreShooter(score);
+        HUDManager.Instance.SetManche(false);
 
         Cursor.visible = false;
     }
@@ -91,14 +96,19 @@ public class ManageSpawnTarget : MonoBehaviour {
                 currentTimeLeft -= Time.deltaTime;
                 HUDManager.Instance.setTimerShooter(currentTimeLeft);
                 if (currentTimeLeft <= 0)
+                {
                     end = true;
+                    CancelInvoke();
+                    HUDManager.Instance.DisplayShooter(false);
+                    Cursor.visible = true;
+                }
                 if (canSpawn)
                 {
-                    Invoke("Spawn", 1);
+                    Invoke("Spawn", startingTimeSpawn);
                     canSpawn = false;
                 }
             }
-        }else
+        }else if(!endDisplay)
         {
             if(score >= minScoreToWin)
             {
@@ -108,6 +118,7 @@ public class ManageSpawnTarget : MonoBehaviour {
             {
                 HUDManager.Instance.DisplayEndScreenShooter(true, "YOU LOOSE");
             }
+            endDisplay = true;
         }
 	}
 
@@ -149,7 +160,7 @@ public class ManageSpawnTarget : MonoBehaviour {
                 else
                     tmpScript.SetSprite(goodWord);
             }
-
+            
             tmpScript.SetText(listBadWords[Random.Range(0, listBadWords.Length)]);
         }
         else
@@ -203,19 +214,19 @@ public class ManageSpawnTarget : MonoBehaviour {
         }
 
         if (value == 1)
-            score += scoreGoodword;
+            if (score - scoreGoodword < 0)
+                score = 0;
+            else
+                score -= scoreGoodword;
         else if(value == 2)
         {
-            if (score - scoreBadWord < 0)
-                score = 0;
-            else
-                score -= scoreBadWord;
+            score += scoreBadWord;
         }else if(value == 3)
         {
-            if (score - scoreMissGoodWord < 0)
+            if (score - scoreMissBadWord < 0)
                 score = 0;
             else
-                score -= scoreMissGoodWord;
+                score -= scoreMissBadWord;
         }
 
         if (score >= palierManche2 && !manche2)

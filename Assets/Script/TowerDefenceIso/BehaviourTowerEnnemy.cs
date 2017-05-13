@@ -37,8 +37,16 @@ public class BehaviourTowerEnnemy : MonoBehaviour {
         }
         else
         {
-            currentCheckPoint++;
-            direction = Vector3.Normalize(new Vector3(CheckPoint[currentCheckPoint + 1].x - CheckPoint[currentCheckPoint].x, CheckPoint[currentCheckPoint + 1].y - CheckPoint[currentCheckPoint].y, CheckPoint[currentCheckPoint + 1].z - CheckPoint[currentCheckPoint].z));
+            if (currentCheckPoint < CheckPoint.Length-2)
+            {
+                currentCheckPoint++;
+                direction = Vector3.Normalize(new Vector3(CheckPoint[currentCheckPoint + 1].x - CheckPoint[currentCheckPoint].x, CheckPoint[currentCheckPoint + 1].y - CheckPoint[currentCheckPoint].y, CheckPoint[currentCheckPoint + 1].z - CheckPoint[currentCheckPoint].z));
+            }
+            else
+            {
+                scriptManager.RemoveLife();
+                DeadEnnemy();
+            }
         }
     }
     
@@ -50,6 +58,8 @@ public class BehaviourTowerEnnemy : MonoBehaviour {
         direction = Vector3.Normalize(new Vector3(CheckPoint[currentCheckPoint + 1].x - CheckPoint[currentCheckPoint].x, CheckPoint[currentCheckPoint + 1].y - CheckPoint[currentCheckPoint].y, CheckPoint[currentCheckPoint + 1].z - CheckPoint[currentCheckPoint].z));
         currentHealth = Maxhealth;
         lifeIndicator.text = currentHealth.ToString();
+
+        scriptManager.CheckEndWave();
     }
 
     public bool hitEnnemy(float hitDmg)
@@ -64,7 +74,6 @@ public class BehaviourTowerEnnemy : MonoBehaviour {
         {
             DeadEnnemy();
             scriptManager.EditMoney(moneyEarn);
-            scriptManager.CheckEndWave();
             return true;
         }
     }

@@ -47,4 +47,10 @@ public class HUDTimer : HUDElement {
             HUDManager.Instance.DisplayTimer(false);
         }
     }
+
+    public void PauseCount(bool _pause)
+    {
+        start = !_pause;
+        CancelInvoke();
+    }
 }

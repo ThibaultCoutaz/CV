@@ -41,6 +41,7 @@ public class ManageTurnFight : MonoBehaviour {
 
         currentEnnemyIndex = PlayerPrefs.GetInt("EnnemyIndexTurnFight");
 
+        HUDManager.Instance.SetPicBoss(currentEnnemyIndex);
         currentlifeEnnemy = listEnnemies[currentEnnemyIndex].maxLifeEnnemy;
         currentTimeToAttackEnnemy = 0;
 
@@ -63,7 +64,6 @@ public class ManageTurnFight : MonoBehaviour {
         {
             pause = !pause;
             HUDManager.Instance.DisplayMenuPause(pause);
-            Cursor.visible = pause;
         }
 
         if (!pause)
@@ -125,6 +125,7 @@ public class ManageTurnFight : MonoBehaviour {
         {
             currentlife-= listEnnemies[currentEnnemyIndex].dmgEnnemy;
         }
+        HUDManager.Instance.GetHitOrHeal(true);
         HUDManager.Instance.SetYourLifeTurnFight(currentlife);
     }
 

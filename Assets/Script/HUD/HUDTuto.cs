@@ -12,16 +12,19 @@ public class HUDTuto : HUDElement {
         None
     }
 
-    public Sprite tutoRunner;
-    public Sprite tutoBucket;
+    private GameObject currentTuto;
+
+    public GameObject tutoRunner;
+    public GameObject tutoBucket;
 
     public void Init(tutoStyle tutoStylish)
     {
         if (tutoStylish == tutoStyle.Runner)
-            GetComponent<Image>().sprite = tutoRunner;
-
+            currentTuto = tutoRunner;
         else if (tutoStylish == tutoStyle.Bucket)
-            GetComponent<Image>().sprite = tutoBucket;
+            currentTuto = tutoBucket;
+
+        currentTuto.SetActive(true);
     }
 
     public void StartPlaying()
