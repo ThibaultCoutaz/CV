@@ -17,6 +17,7 @@ public class HUDLevelUpTower : HUDElement {
 
     public Button levelUp;
     public stats[] statList;
+    public Text priceLevelUp;
 
     public void Init(TowerBehaviour script)
     {
@@ -37,14 +38,21 @@ public class HUDLevelUpTower : HUDElement {
             statList[1].level.text = "lvl." + (currentlevel+2);
             statList[1].textDmg.text = "Damages : " + scriptTower.GetInfosLevels(currentlevel + 1).dmg.ToString();
             statList[1].textSpeed.text = "Speed Attaques : " + scriptTower.GetInfosLevels(currentlevel + 1).speedAttack.ToString();
+            priceLevelUp.text = scriptTower.GetInfosLevels(currentlevel).priceLevelUp.ToString() + " Golds";
         }
         else
         {
             statList[1].level.text = "MaxLvl";
             statList[1].textDmg.text = "MaxLevel";
             statList[1].textSpeed.text = "MaxLevel";
+            priceLevelUp.text = "0 Gold";
             levelUp.interactable = false;
         }
+
+        if (scriptTower.GetInfosLevels(currentlevel).priceLevelUp > scriptTower.scriptManager.currentMoney)
+            levelUp.interactable = false;
+        else
+            levelUp.interactable = true;
     }
 
     public void LevelUp()

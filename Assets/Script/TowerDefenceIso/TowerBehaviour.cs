@@ -15,6 +15,7 @@ public class TowerBehaviour : MonoBehaviour
         public GameObject rangeCollider;
         public int dmg;
         public float speedAttack;
+        public float priceLevelUp;
     }
 
     [System.Serializable]
@@ -40,11 +41,12 @@ public class TowerBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(EnnemiesInRange.Count > 0 && canFire)
-        {
-            canFire = false;
-            StartCoroutine("Fire");
-        }
+        if (!scriptManager.end) 
+            if(EnnemiesInRange.Count > 0 && canFire && !scriptManager.pause)
+            {
+                canFire = false;
+                StartCoroutine("Fire");
+            }
     }
 
     IEnumerator Fire()
@@ -85,6 +87,8 @@ public class TowerBehaviour : MonoBehaviour
                 typetmp.levels[currentLevel].sprite.SetActive(false);
                 //typetmp.levels[currentLevel].rangeCollider.SetActive(false); //If one day the range change with level
 
+                scriptManager.EditMoney(-typetmp.levels[currentLevel].priceLevelUp); //A modifier pour le levelUp en echange de thunes
+
                 currentLevel++;
                 typetmp.levels[currentLevel].sprite.SetActive(true);
                 //typetmp.levels[currentLevel].rangeCollider.SetActive(true);
@@ -92,7 +96,6 @@ public class TowerBehaviour : MonoBehaviour
                 currentSpeedAttack = typetmp.levels[currentLevel].speedAttack;
 
 
-                scriptManager.EditMoney(0); //A modifier pour le levelUp en echange de thunes
             }
             else
             {
@@ -180,11 +183,13 @@ public class TowerBehaviour : MonoBehaviour
         {
             leveltmp.dmg = typetmp.levels[level].dmg;
             leveltmp.speedAttack = typetmp.levels[level].speedAttack;
+            leveltmp.priceLevelUp = typetmp.levels[level].priceLevelUp;
         }
         else
         {
             leveltmp.dmg = -1;
             leveltmp.speedAttack = -1;
+            leveltmp.priceLevelUp = -1;
         }
 
         return leveltmp;

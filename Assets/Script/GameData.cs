@@ -26,7 +26,8 @@ namespace Game
         MenuPause,
         EndScreenShooter,
         Credit,
-        CV
+        CV,
+        EndTowerDefence
     }
 
     public enum Tower_Types

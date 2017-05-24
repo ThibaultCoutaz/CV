@@ -7,12 +7,16 @@ public class HUDStartWave : HUDElement {
 
     private GameManagerTower scriptmanager;
     public Text textButton;
-    private int indexWave = 1;
+    private int indexWave;
+    private int maxWave;
 
 	public void InitButtonStartWave(GameManagerTower script)
     {
         scriptmanager = script;
-        textButton.text = "Start Wave "+indexWave;
+        indexWave = script.currentWave + 1;
+        maxWave = script.waveMonster.Length;
+        textButton.text = "Start Wave "+ indexWave +"/"+ maxWave;
+        GetComponent<Button>().interactable = true;
     }
 
     public void StartWave()
@@ -20,12 +24,12 @@ public class HUDStartWave : HUDElement {
         textButton.text = "Wave " + indexWave + " en cours";
         scriptmanager.StartWave();
         GetComponent<Button>().interactable = false;
+        indexWave++;
     }
 
     public void EnableButton()
     {
-        indexWave++;
-        textButton.text = "Start Wave " + indexWave;
+        textButton.text = "Start Wave " + indexWave+"/"+maxWave;
         GetComponent<Button>().interactable = true;
     }
 }

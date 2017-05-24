@@ -31,23 +31,24 @@ public class BehaviourTowerEnnemy : MonoBehaviour {
     }
 	
 	void Update () {
-        if (Vector3.Distance(transform.position, CheckPoint[currentCheckPoint + 1]) > speed)
-        {
-            transform.position += direction * speed;
-        }
-        else
-        {
-            if (currentCheckPoint < CheckPoint.Length-2)
+        if (!scriptManager.pause && !scriptManager.end)
+            if (Vector3.Distance(transform.position, CheckPoint[currentCheckPoint + 1]) > speed)
             {
-                currentCheckPoint++;
-                direction = Vector3.Normalize(new Vector3(CheckPoint[currentCheckPoint + 1].x - CheckPoint[currentCheckPoint].x, CheckPoint[currentCheckPoint + 1].y - CheckPoint[currentCheckPoint].y, CheckPoint[currentCheckPoint + 1].z - CheckPoint[currentCheckPoint].z));
+                transform.position += direction * speed;
             }
             else
             {
-                scriptManager.RemoveLife();
-                DeadEnnemy();
+                if (currentCheckPoint < CheckPoint.Length-2)
+                {
+                    currentCheckPoint++;
+                    direction = Vector3.Normalize(new Vector3(CheckPoint[currentCheckPoint + 1].x - CheckPoint[currentCheckPoint].x, CheckPoint[currentCheckPoint + 1].y - CheckPoint[currentCheckPoint].y, CheckPoint[currentCheckPoint + 1].z - CheckPoint[currentCheckPoint].z));
+                }
+                else
+                {
+                    scriptManager.RemoveLife();
+                    DeadEnnemy();
+                }
             }
-        }
     }
     
     private void DeadEnnemy()

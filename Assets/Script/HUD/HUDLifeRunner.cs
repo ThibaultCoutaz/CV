@@ -13,6 +13,7 @@ public class HUDLifeRunner : HUDElement {
 
     public void InitLife(int nbLife)
     {
+        ResetLife();
         lifeToRemove = nbLife - 1;
         listLife = new GameObject[nbLife];
         for(int i = 0; i < nbLife; i++)
@@ -28,6 +29,17 @@ public class HUDLifeRunner : HUDElement {
         {
             listLife[lifeToRemove].GetComponent<Image>().sprite = iconLifeEmpty;
             lifeToRemove--;
+        }
+    }
+
+    private void ResetLife()
+    {
+        if(listLife != null)
+        {
+            for(int i = 0; i < listLife.Length; i++)
+            {
+                Destroy(listLife[i]);
+            }
         }
     }
 

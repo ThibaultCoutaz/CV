@@ -16,7 +16,8 @@ public class CharacterBehaviour : MonoBehaviour {
     private Vector3 spawn;
     [HideInInspector]
     public bool pause = false;
-    private bool displayPause = false;
+
+    private bool canStartPause;
 
 	// Use this for initialization
 	void Start () {
@@ -29,14 +30,17 @@ public class CharacterBehaviour : MonoBehaviour {
         GetComponent<Platformer2DUserControl>().enabled = false;
         GetComponent<PlatformerCharacter2D>().enabled = false;
         HUDManager.Instance.DisplayLifeRunner(true,nbTry);
-        HUDManager.Instance.DisplayTuto(true, HUDTuto.tutoStyle.Runner);
-	}
+        HUDManager.Instance.DisplayTuto(true, true,HUDTuto.tutoStyle.Runner);
+
+        canStartPause = false;
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
 
         //Pause
-        if (InputManager.Instance.Pause)
+        if (InputManager.Instance.Pause && canStartPause)
         {
             pause = !pause;
             HUDManager.Instance.DisplayMenuPause(pause);
@@ -103,13 +107,14 @@ public class CharacterBehaviour : MonoBehaviour {
         }
 
         if (currentNbTry <= 0)
-            EndGame();
+            EndGame(true);
         else
             Restart();
     }
 
     public void StartGame()
     {
+        canStartPause = true;
         cam.GetComponent<BehaviourCamera>().gameStart = true;
         GetComponent<Platformer2DUserControl>().enabled = true;
         GetComponent<PlatformerCharacter2D>().enabled = true;
@@ -132,9 +137,12 @@ public class CharacterBehaviour : MonoBehaviour {
         spawn = newSpawn;
     }
 
-    public void EndGame()
+    public void EndGame(bool dead)
     {
-        HUDManager.Instance.DisplayEndRunner(true);
+        if(dead)
+            HUDManager.Instance.DisplayEndRunner(true, "Game Over");
+        else
+            HUDManager.Instance.DisplayEndRunner(true, "You did it! Well done!");
         cam.GetComponent<BehaviourCamera>().gameStart = false;
         GetComponent<Platformer2DUserControl>().enabled = false;
         GetComponent<PlatformerCharacter2D>().enabled = false;

@@ -7,6 +7,6 @@ public class BehaviourEnd : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.gameObject.tag == "Player")
-            coll.gameObject.GetComponent<CharacterBehaviour>().EndGame();
+            coll.gameObject.GetComponent<CharacterBehaviour>().EndGame(false);
     }
 }

@@ -29,7 +29,6 @@ public class ManageDialogue : MonoBehaviour {
     public void NextSpeach()
     {
         indexDialg++;
-        Debug.LogError(indexDialg);
         if (indexDialg == 5)
         {
             PlayerPrefs.SetInt("story", indexDialg);
@@ -49,32 +48,40 @@ public class ManageDialogue : MonoBehaviour {
             HUDManager.Instance.StartScene("TurnFight");
             PlayerPrefs.SetInt("EnnemyIndexTurnFight", 0);
         }
-        else if (indexDialg == 16)
+        else if (indexDialg == 15)
         {
             PlayerPrefs.SetInt("story", indexDialg);
             HUDManager.Instance.DisplayDialogue(false);
             HUDManager.Instance.StartScene("TurnFight");
             PlayerPrefs.SetInt("EnnemyIndexTurnFight", 1);
         }
-        else if (indexDialg == 18)
+        else if (indexDialg == 16)
         {
             PlayerPrefs.SetInt("story", indexDialg);
             HUDManager.Instance.DisplayDialogue(false);
             HUDManager.Instance.StartScene("TurnFight");
             PlayerPrefs.SetInt("EnnemyIndexTurnFight", 2);
         }
-        else if (indexDialg == 22)
+        else if (indexDialg == 20)
         {
             PlayerPrefs.SetInt("story", indexDialg);
             HUDManager.Instance.DisplayDialogue(false);
             HUDManager.Instance.StartScene("TowerDefence");
             PlayerPrefs.SetInt("EnnemyIndexTurnFight", 0);
+            HUDManager.Instance.DisplaySuccess(true);
+        }
+        else if (indexDialg == 21)
+        {
+            HUDManager.Instance.DisplayDialogue(false);
+            HUDManager.Instance.displayMenu(false);
+            HUDManager.Instance.DisplaySuccess(false);
+            HUDManager.Instance.StartScene("Menu");
         }
         else
         {
             PlayerPrefs.SetInt("story", indexDialg);
             HUDManager.Instance.SetTextDialogue(Dialogue[indexDialg]);
-            if(indexDialg == 20)
+            if(indexDialg == 18)
             {
                 HUDManager.Instance.DisplayButton(true);
             }

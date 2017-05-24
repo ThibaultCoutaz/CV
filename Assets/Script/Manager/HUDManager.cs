@@ -47,7 +47,9 @@ public class HUDManager : Singleton<HUDManager>
             key == Game.UI_Types.MenuPause ||
             key == Game.UI_Types.EndScreenShooter ||
             key == Game.UI_Types.Credit ||
-            key == Game.UI_Types.CV)
+            key == Game.UI_Types.CV ||
+            key == Game.UI_Types.Menu ||
+            key == Game.UI_Types.EndTowerDefence)
             element.displayGroup(false, .0f, false, false);
     }
 
@@ -74,20 +76,14 @@ public class HUDManager : Singleton<HUDManager>
 
     #endregion
 
-    public void DisplayTuto(bool display, HUDTuto.tutoStyle stylish = HUDTuto.tutoStyle.Bucket)
+    public void DisplayTuto(bool display, bool firstTime = false, HUDTuto.tutoStyle stylish = HUDTuto.tutoStyle.Bucket)
     {
         HUDElement tuto;
         if (elements.TryGetValue(Game.UI_Types.Tutorial, out tuto))
         {
+            tuto.displayGroup(display);
             if (display)
-            {
-                tuto.displayGroup(true);
-                ((HUDTuto)tuto).Init(stylish);
-            }
-            else
-            {
-                tuto.displayGroup(false);
-            }
+                ((HUDTuto)tuto).Init(stylish,firstTime);
         }
     }
 
@@ -180,11 +176,13 @@ public class HUDManager : Singleton<HUDManager>
         }
     }
 
-    public void DisplayEndRunner(bool display)
+    public void DisplayEndRunner(bool display,string t = "")
     {
         HUDElement end;
         if (elements.TryGetValue(Game.UI_Types.EndRunner, out end))
         {
+            if (display)
+                ((HUDEndRunner)end).Init(t);
             end.displayGroup(display);
         }
     }
@@ -227,7 +225,7 @@ public class HUDManager : Singleton<HUDManager>
         }
     }
 
-    public void DisplaySatrtWave(bool display)
+    public void DisplayStartWave(bool display)
     {
         HUDElement startWave;
         if (elements.TryGetValue(Game.UI_Types.StartWave, out startWave))
@@ -250,7 +248,7 @@ public class HUDManager : Singleton<HUDManager>
         HUDElement money;
         if (elements.TryGetValue(Game.UI_Types.MoneyTowerDefence, out money))
         {
-            money.displayGroup(true);
+            money.displayGroup(display);
         }
     }
 
@@ -262,7 +260,7 @@ public class HUDManager : Singleton<HUDManager>
             money.setText(amount.ToString());
         }
     }
-
+    
     public void DisplayLevelUpTower(bool display, TowerBehaviour script)
     {
         HUDElement levelUp;
@@ -271,6 +269,17 @@ public class HUDManager : Singleton<HUDManager>
             levelUp.displayGroup(display);
             if (display)
                 ((HUDLevelUpTower)levelUp).Init(script);
+        }
+    }
+
+    public void DisplayEndScreenTowerDefence(bool display, string title = "")
+    {
+        HUDElement endScreen;
+        if (elements.TryGetValue(Game.UI_Types.EndTowerDefence, out endScreen))
+        {
+            endScreen.displayGroup(display);
+            if (display)
+                ((HUDEndTowerDefence)endScreen).SetTitle(title);
         }
     }
     #endregion
@@ -309,6 +318,15 @@ public class HUDManager : Singleton<HUDManager>
         if (elements.TryGetValue(Game.UI_Types.Dialogue, out dialg))
         {
             ((HUDDialogues)dialg).DisplayButton(display);
+        }
+    }
+
+    public void DisplaySuccess(bool display)
+    {
+        HUDElement dialg;
+        if (elements.TryGetValue(Game.UI_Types.Dialogue, out dialg))
+        {
+            ((HUDDialogues)dialg).DisplaySuccess(display);
         }
     }
     #endregion
@@ -389,6 +407,8 @@ public class HUDManager : Singleton<HUDManager>
         if (elements.TryGetValue(Game.UI_Types.TurnFight, out turnFight))
         {
             turnFight.displayGroup(display);
+            if (!display)
+                ((HUDTurnFight)turnFight).DisplayLvlUp(false);
         }
     }
 
@@ -479,6 +499,42 @@ public class HUDManager : Singleton<HUDManager>
         if (elements.TryGetValue(Game.UI_Types.TurnFight, out turnFight))
         {
             ((HUDTurnFight)turnFight).SetPicBoss(index);
+        }
+    }
+
+    public void DisplayEndTurnFight(bool display,bool restart)
+    {
+        HUDElement turnFight;
+        if (elements.TryGetValue(Game.UI_Types.TurnFight, out turnFight))
+        {
+            ((HUDTurnFight)turnFight).SetEdnScreen(display, restart);
+        }
+    }
+
+    public void DisplayShield(bool display)
+    {
+        HUDElement turnFight;
+        if (elements.TryGetValue(Game.UI_Types.TurnFight, out turnFight))
+        {
+            ((HUDTurnFight)turnFight).displayShield(display);
+        }
+    }
+
+    public void SetDmgIndicatorYou(int value)
+    {
+        HUDElement turnFight;
+        if (elements.TryGetValue(Game.UI_Types.TurnFight, out turnFight))
+        {
+            ((HUDTurnFight)turnFight).EditDmgIndicatorYou(value);
+        }
+    }
+
+    public void SetDmgIndicatorEnemy(int value)
+    {
+        HUDElement turnFight;
+        if (elements.TryGetValue(Game.UI_Types.TurnFight, out turnFight))
+        {
+            ((HUDTurnFight)turnFight).EditDmgIndicatorEnemy(value);
         }
     }
     #endregion

@@ -7,7 +7,9 @@ public class HUDMenuPause : HUDElement {
     private string nextScene = "";
     private string previousScene = "";
 
-    public void Init(string _nextScene,string _previousScene)
+    public HUDTuto tutoScript;
+
+    public void Init(string _nextScene, string _previousScene)
     {
         nextScene = _nextScene;
         previousScene = _previousScene;
@@ -15,14 +17,26 @@ public class HUDMenuPause : HUDElement {
 
     public void PassLevel()
     {
-        if(previousScene == "Runner")
+        DiseableHUD();
+        HUDManager.Instance.StartScene(nextScene);
+    }
+
+    public void BackToMenu()
+    {
+        DiseableHUD();
+        HUDManager.Instance.StartScene("Menu");
+    }
+
+    private void DiseableHUD()
+    {
+        if (previousScene == "Runner")
         {
             HUDManager.Instance.DisplayEndRunner(false);
             HUDManager.Instance.DisplayLifeRunner(false);
             HUDManager.Instance.DisplayTimer(false);
             HUDManager.Instance.DisplayTuto(false);
         }
-        else if(previousScene == "Shooter")
+        else if (previousScene == "Shooter")
         {
             HUDManager.Instance.DisplayShooter(false);
             HUDManager.Instance.DisplayTimer(false);
@@ -35,9 +49,26 @@ public class HUDMenuPause : HUDElement {
             HUDManager.Instance.DisplayTurnFight(false);
             HUDManager.Instance.DisplayTimer(false);
             HUDManager.Instance.DisplayTuto(false);
+            HUDManager.Instance.ActivateButton(false);
+        }
+        else if (previousScene == "TowerDefence")
+        {
+            HUDManager.Instance.DisplayTowerShop(false);
+            HUDManager.Instance.DisplayMoneyTowerDefence(false);
+            HUDManager.Instance.DisplayStartWave(false);
+            HUDManager.Instance.DisplayLevelUpTower(false, null);
+            HUDManager.Instance.DisplayEndScreenTowerDefence(false);
+            HUDManager.Instance.DisplayTimer(false);
+            HUDManager.Instance.DisplayTuto(false);
         }
         HUDManager.Instance.DisplayMenuPause(false);
-        HUDManager.Instance.StartScene(nextScene);
+
+    }
+
+    public void OpenTutorial()
+    {
+        HUDManager.Instance.DisplayTuto(true ,false,tutoScript.currentTutoStyle);
+        HUDManager.Instance.DisplayMenuPause(false);
     }
 
 }

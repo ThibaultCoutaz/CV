@@ -75,7 +75,7 @@ public class ManageSpawnTarget : MonoBehaviour {
         HUDManager.Instance.SetScoreShooter(score);
         HUDManager.Instance.SetManche(false);
 
-        Cursor.visible = false;
+        HUDManager.Instance.DisplayTuto(true, true,HUDTuto.tutoStyle.Shooter);
     }
 	
 	// Update is called once per frame
@@ -83,15 +83,20 @@ public class ManageSpawnTarget : MonoBehaviour {
         if (!end)
         {
             //Pause
-            if (InputManager.Instance.Pause)
+            if (InputManager.Instance.Pause && TimerManager.Instance.canStartGame)
             {
                 pause = !pause;
                 HUDManager.Instance.DisplayMenuPause(pause);
                 HUDManager.Instance.DisplayViewFinder(!pause);
                 Cursor.visible = pause;
+                if (pause)
+                {
+                    CancelInvoke();
+                    canSpawn = true;
+                }
             }
 
-            if (!pause)
+            if (!pause && TimerManager.Instance.canStartGame)
             {
                 currentTimeLeft -= Time.deltaTime;
                 HUDManager.Instance.setTimerShooter(currentTimeLeft);

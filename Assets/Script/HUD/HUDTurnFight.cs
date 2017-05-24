@@ -9,6 +9,22 @@ public class HUDTurnFight : HUDElement {
 
     public Button attack;
     public Button defence;
+    public Button lvlUP;
+    public Button pass;
+    public GameObject LvlUpScreen;
+
+    #region LvlUP
+    public Text CAttack, CAttackSpeed, Clife;
+    public Button heal,attackB,speedAttackB;
+    #endregion
+
+    public GameObject endScreen;
+    public GameObject endButton, restartButton;
+
+    public GameObject shield;
+
+    public Text dmgIndicatorYou;
+    public Text dmgIndicatorEnemy;
 
     #region YourLifeVariable
     public RectTransform barTransformLife;
@@ -75,11 +91,7 @@ public class HUDTurnFight : HUDElement {
     {
         maxTimerEnnemy = EnnemyAttackTimer;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 
     //**********To calculate the value of the Bar*******//
     private float MapValues(float x, float inMin, float inMax, float outMin, float outMax)
@@ -138,23 +150,111 @@ public class HUDTurnFight : HUDElement {
 
     public void ActivateAction(bool activate)
     {
+        lvlUP.interactable = activate;
         attack.interactable = activate;
         defence.interactable = activate;
+        pass.interactable = activate;
+    }
+
+    public void Pass()
+    {
+        manager.StartTimer();
+        ActivateAction(false);
     }
 
     public void Attack()
     {
         manager.StartTimer();
         manager.AttackEnnemy();
-        attack.interactable = false;
-        defence.interactable = false;
+        ActivateAction(false);
     }
 
     public void Defence()
     {
         manager.StartTimer();
-        attack.interactable = false;
-        defence.interactable = false;
+        ActivateAction(false);
+        manager.ShieldUP = true;
+        HUDManager.Instance.DisplayShield(true);
+    }
+
+    public void LvlUp()
+    {
+        CAttack.text = manager.Getdmg().x + "-" + manager.Getdmg().y;
+        CAttackSpeed.text = manager.GetSpeed().ToString();
+        Clife.text = manager.currentlife.ToString()+"/"+manager.maxLife.ToString();
+        LvlUpScreen.SetActive(true);
+        ActivateAction(false);
+
+        if (manager.currentlife >= manager.maxLife)
+            heal.interactable = false;
+        else
+            heal.interactable = true;
+
+        if (manager.GetSpeed() <= manager.MinimumSpeed)
+        {
+            speedAttackB.interactable = false;
+            speedAttackB.GetComponentInChildren<Text>().text = "max Level";
+        }
+        else
+        {
+            speedAttackB.interactable = true;
+            speedAttackB.GetComponentInChildren<Text>().text = "- 0.25 secondes";
+        }
+
+        if (manager.Getdmg().y >= manager.MaxAttack)
+        {
+            attackB.interactable = false;
+            attackB.GetComponentInChildren<Text>().text = " Max Level";
+        }
+        else
+        {
+            attackB.interactable = true;
+            attackB.GetComponentInChildren<Text>().text = "+10";
+        }
+
+    }
+
+    public void LvlUPLeave()
+    {
+        LvlUpScreen.SetActive(false);
+        ActivateAction(true);
+    }
+
+    public void DisplayLvlUp(bool display)
+    {
+        LvlUpScreen.SetActive(display);
+    }
+
+    public void LvlUpAttack(int amount)
+    {
+        manager.StartTimer();
+        LvlUpScreen.SetActive(false);
+        manager.Setdmg(new Vector2(manager.Getdmg().x + amount, manager.Getdmg().y + amount));
+    }
+
+    public void LvlUpAttackSpeed(float amount)
+    {
+        manager.StartTimer();
+        LvlUpScreen.SetActive(false);
+        manager.SetSpeed(manager.GetSpeed() - amount);
+        ResizeSpeedAttack(manager.GetSpeed());
+    }
+
+    private void ResizeSpeedAttack(float newMax)
+    {
+        SetYourTimer(maxTimer);
+        maxTimer = newMax;
+        cachedYTimer = barTransformTimer.localPosition.y;
+        maxXValueTimer = barTransformTimer.localPosition.x;
+        minXValueTimer = barTransformTimer.localPosition.x - barTransformTimer.rect.width;
+        SetYourTimer(0);
+    }
+
+    public void LvlUpLife(int amount)
+    {
+        manager.StartTimer();
+        LvlUpScreen.SetActive(false);
+        manager.HealPlayer(amount);
     }
 
     public void RestartValue()
@@ -168,5 +268,72 @@ public class HUDTurnFight : HUDElement {
     public void SetPicBoss(int index)
     {
         picBoss.sprite = bossSprites[index];
+    }
+
+    public void SetEdnScreen(bool display,bool restart)
+    {
+        if (restart)
+            restartButton.SetActive(true);
+        else
+            endButton.SetActive(true);
+
+        endScreen.SetActive(display);
+        ActivateAction(false);
+    }
+
+    public void ButtonRestart()
+    {
+        RestartValue();
+        HUDManager.Instance.DisplayEndTurnFight(false, false);
+        endButton.SetActive(false);
+        restartButton.SetActive(false);
+        HUDManager.Instance.DisplayTimer(false);
+        HUDManager.Instance.DisplayTuto(false);
+        HUDManager.Instance.DisplayMenuPause(false);
+        HUDManager.Instance.DisplayTurnFight(false);
+        HUDManager.Instance.StartScene("TurnFight");
+    }
+
+    public void ButtonContinue()
+    {
+        RestartValue();
+        HUDManager.Instance.DisplayEndTurnFight(false, false);
+        endButton.SetActive(false);
+        restartButton.SetActive(false);
+        HUDManager.Instance.DisplayTimer(false);
+        HUDManager.Instance.DisplayTuto(false);
+        HUDManager.Instance.DisplayMenuPause(false);
+        HUDManager.Instance.DisplayTurnFight(false);
+        HUDManager.Instance.StartScene("Dialogue");
+        
+    }
+
+    public void displayShield(bool display)
+    {
+        shield.SetActive(display);
+    }
+
+    public void EditDmgIndicatorYou(int value)
+    {
+        dmgIndicatorYou.gameObject.SetActive(true);
+        dmgIndicatorYou.text = "-"+value.ToString();
+        Invoke("displayOffYou", 0.5f);
+    }
+
+    private void displayOffYou()
+    {
+        dmgIndicatorYou.gameObject.SetActive(false);
+    }
+
+    public void EditDmgIndicatorEnemy(int value)
+    {
+        dmgIndicatorEnemy.gameObject.SetActive(true);
+        dmgIndicatorEnemy.text = "-" + value.ToString();
+        Invoke("displayOffEnemy", 0.5f);
+    }
+
+    private void displayOffEnemy()
+    {
+        dmgIndicatorEnemy.gameObject.SetActive(false);
     }
 }

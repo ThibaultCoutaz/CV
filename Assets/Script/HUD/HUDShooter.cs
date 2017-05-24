@@ -43,7 +43,7 @@ public class HUDShooter : HUDElement {
         }
         else
         {
-            manche.color = Color.white;
+            manche.color = Color.red;
         }
     }
 

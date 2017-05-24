@@ -10,6 +10,7 @@ public class HUDElementShop : MonoBehaviour {
     public Text priceText;
     private float price;
     public Game.Tower_Types towerType;
+    public Button buy;
 
     TowerBehaviour towerScript;
 
@@ -25,6 +26,10 @@ public class HUDElementShop : MonoBehaviour {
     public void InitScript(TowerBehaviour script)
     {
         towerScript = script;
+        if (price > towerScript.scriptManager.currentMoney)
+            buy.interactable = false;
+        else
+            buy.interactable = true;
     }
 
     public void Buy()

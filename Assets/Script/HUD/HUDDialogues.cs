@@ -14,6 +14,8 @@ public class HUDDialogues : HUDElement {
     public float timeWriteNormal = 0.05f;
     public float timeWriteSpeed = 0.0025f;
 
+    public GameObject success;
+
     private float timeWriteCurrent;
 
     private ManageDialogue scriptDialogue;
@@ -100,6 +102,19 @@ public class HUDDialogues : HUDElement {
     public void NoButton()
     {
         scriptDialogue.NextReply();
+    }
+
+    public void DisplaySuccess(bool display)
+    {
+        success.SetActive(display);
+    }
+
+    public void BackToMenu()
+    {
+        HUDManager.Instance.DisplayDialogue(false);
+        HUDManager.Instance.displayMenu(false);
+        HUDManager.Instance.DisplaySuccess(false);
+        HUDManager.Instance.StartScene("Menu");
     }
 
 }

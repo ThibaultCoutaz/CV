@@ -22,13 +22,20 @@ public class GameManagerTower : MonoBehaviour {
     private GameObject[] listEnnemies;
 
     private bool waveStart = false;
-    private int currentWave = 0;
+    [HideInInspector]
+    public int currentWave = 0;
     private int indexEnnemySpawn = 0;
+
+    [HideInInspector]
+    public bool pause = false;
+
+    [HideInInspector]
+    public bool end;
 
 	// Use this for initialization
 	void Start () {
         HUDManager.Instance.InitTowerShop(listTower);
-
+        currentWave = 0;
         int maxEnnemies = CheckMaxEnnemies();
 
         listEnnemies = new GameObject[maxEnnemies];
@@ -40,7 +47,7 @@ public class GameManagerTower : MonoBehaviour {
         }
 
         HUDManager.Instance.InitStartWave(this);
-        HUDManager.Instance.DisplaySatrtWave(true);
+        HUDManager.Instance.DisplayStartWave(true);
         HUDManager.Instance.DisplayMoneyTowerDefence(true);
         HUDManager.Instance.EditMoneyTowerDefence(currentMoney);
 
@@ -53,22 +60,39 @@ public class GameManagerTower : MonoBehaviour {
             currentLife[i] = Instantiate(life, parentlife);
         }
 
-	}
+        HUDManager.Instance.InitMenuPause("Dialogue", "TowerDefence");
+
+        HUDManager.Instance.DisplayTuto(true, true,HUDTuto.tutoStyle.TowerDefence);
+
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (waveStart)
+        if (!end)
         {
-            if (indexEnnemySpawn < waveMonster[currentWave - 1])
+            //Pause
+            if (InputManager.Instance.Pause)
             {
-                Invoke("spawnEnemy", Random.Range(0.5f,1.5f));
-                waveStart = false;
+                pause = !pause;
+                HUDManager.Instance.DisplayMenuPause(pause);
+                if (IsInvoking())
+                    waveStart = true;
+                CancelInvoke();
             }
-            else
+
+            if (waveStart && !pause)
             {
-                indexEnnemySpawn = 0;
-                waveStart = false;
+                if (indexEnnemySpawn < waveMonster[currentWave - 1])
+                {
+                    Invoke("spawnEnemy", Random.Range(0.5f, 1.5f));
+                    waveStart = false;
+                }
+                else
+                {
+                    indexEnnemySpawn = 0;
+                    waveStart = false;
+                }
             }
         }
     }
@@ -112,20 +136,31 @@ public class GameManagerTower : MonoBehaviour {
                 nbActif++;
         }
 
-        if(nbActif ==0)
-            HUDManager.Instance.EnableButtonWaveStart();
+        if(nbActif == 0)
+        {
+            if (currentWave >= waveMonster.Length - 1)
+            {
+                end = true;
+                HUDManager.Instance.DisplayEndScreenTowerDefence(true, "Well Done! You beat Gamagora.");
+            }
+            else
+                HUDManager.Instance.EnableButtonWaveStart();
+        }
     }
 
     public void RemoveLife()
     {
-        if(currentlifeInt > 0)
+        if (currentlifeInt > 0)
         {
-            currentLife[currentlifeInt-1].SetActive(false);
+            currentLife[currentlifeInt - 1].SetActive(false);
             currentlifeInt--;
         }
-        else
+
+        if (currentlifeInt <= 0)
         {
-            //EndGame
+            HUDManager.Instance.DisplayEndScreenTowerDefence(true, "Sorry! Gamagora beat you.");
+            end = true;
         }
+        
     }
 }

@@ -91,6 +91,7 @@
     <Compile Include="Assets\Script\HUD\HUDElement.cs" />
     <Compile Include="Assets\Script\HUD\HUDElementShop.cs" />
     <Compile Include="Assets\Script\HUD\HUDEndRunner.cs" />
+    <Compile Include="Assets\Script\HUD\HUDEndTowerDefence.cs" />
     <Compile Include="Assets\Script\HUD\HUDFinalScreenShooter.cs" />
     <Compile Include="Assets\Script\HUD\HUDLevelUpTower.cs" />
     <Compile Include="Assets\Script\HUD\HUDLifeRunner.cs" />
@@ -102,7 +103,9 @@
     <Compile Include="Assets\Script\HUD\HUDTowerShop.cs" />
     <Compile Include="Assets\Script\HUD\HUDTurnFight.cs" />
     <Compile Include="Assets\Script\HUD\HUDTuto.cs" />
+    <Compile Include="Assets\Script\HUD\URLOpen.cs" />
     <Compile Include="Assets\Script\InitGame.cs" />
+    <Compile Include="Assets\Script\ManageMenu.cs" />
     <Compile Include="Assets\Script\Manager\HUDManager.cs" />
     <Compile Include="Assets\Script\Manager\InputManager.cs" />
     <Compile Include="Assets\Script\Manager\TimerManager.cs" />
